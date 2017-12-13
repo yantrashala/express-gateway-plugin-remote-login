@@ -1,0 +1,39 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  hostname: localhost
+apiEndpoints:
+  api:
+    host: 'localhost'
+    paths: '/ip'
+  api2:
+    host: 'localhost'
+    paths: '/user-agent'
+serviceEndpoints:
+  httpbin:
+    url: 'https://httpbin.org'
+policies:
+  - cors
+  - expression
+  - log
+  - proxy
+  - remote-login
+pipelines:
+  first:
+    apiEndpoints:
+      - api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin 
+              changeOrigin: true
+  second:
+    apiEndpoints:
+      - api2
+    policies:
+      - remote-login:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin 
+              changeOrigin: true
