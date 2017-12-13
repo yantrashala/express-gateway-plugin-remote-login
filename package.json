@@ -1,6 +1,6 @@
 {
   "name": "express-gateway-plugin-remote-login",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Remote Login Plugin for Express Gateway",
   "main": "manifest.js",
   "scripts": {

@@ -1,3 +1,11 @@
 # express-gateway-plugin-remote-login
 
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"username": "test","password": "test" }' 'http://localhost:8080/oauth2/token' -w %{time_total}
+An express gateway plugin to allow remote authentication
+
+# Installation
+
+```sh
+eg plugin install remote-login
+```
+
+### Further documentation pending
