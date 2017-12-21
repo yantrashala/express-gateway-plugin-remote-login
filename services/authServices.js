@@ -51,7 +51,6 @@ module.exports.authenticateLocal = function (req, clientId, clientSecret, done) 
         })
     })
     .then(function (result) {
-      console.log(result);
       return done(null, result);
     })
     .catch(function (err) {
@@ -68,6 +67,8 @@ module.exports.authenticateToken = function (req, accessToken, done) {
 
   let tokenObj;
   const tokenPassword = accessToken.split('|')[1];
+  delete req.headers.authorization;
+
 
   _pluginContext.services.token.get(accessToken)
     .then(_tokenObj => {
@@ -77,15 +78,18 @@ module.exports.authenticateToken = function (req, accessToken, done) {
         return null;
       }
 
+      req.headers.authorization = new Buffer('user:'+tokenObj.user).toString('base64');
+
       tokenObj.user = JSON.parse(tokenObj.user);
+      delete tokenObj.tokenDecrypted;
+
+      console.log(tokenObj);
 
       return tokenObj;
     })
     .then(tokenObj => {
       if(!tokenObj)
         return done(null, false);
-
-      console.log('consumer',tokenObj);
       return done(null, tokenObj);
     });
     // .then(consumer => {
